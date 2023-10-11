@@ -15,17 +15,17 @@ namespace MovieApi.Controllers;
 public class MovieController : ControllerBase
 {
     [HttpPost]//4:  vamos fazer uma Postagem do filme 
-    //5 : Neste momento fizemos um Post no Postman , com url : 7078/Movie 
-    //5: passamos no body um Json , com o titulo , genero e time e deu codigo 200, ok
-    // --> na consola apareve o codigo 200 e ALURA Movie
-    // Neste momento passamos um filme  na nossa lista 
+              //5 : Neste momento fizemos um Post no Postman , com url : 7078/Movie 
+              //5: passamos no body um Json , com o titulo , genero e time e deu codigo 200, ok
+              // --> na consola apareve o codigo 200 e ALURA Movie
+              // Neste momento passamos um filme  na nossa lista 
 
     // 2 : Metodo para registar um filme 
     // Para adicionar o filme no Sistema mas temos que receber alguma informaçao, via parametro
     // iremos receber um filme como parametro
 
     //public void AddMovie([FromBody] Filme filme)
-        public IActionResult AddMovie([FromBody] Filme filme)
+    public IActionResult AddMovie([FromBody] Filme filme)
     {
 
         // ESTA SERIA UMA POSSIBILIDADE PARA POR CERTOS LIMITES E VALLIDAÇOES , PARA RESPEITE CERTAS REGRAS
@@ -55,7 +55,7 @@ public class MovieController : ControllerBase
         // por ultimo , o objecto que foi criado , no sistema
         // Agora o que faz no postman , se fizermos Post , e visualizarmos nos Headers podemos ver que sempre que criamos um filme o Url, passa sempre um novo id , para cada filme 
         // o que acontece é da-me umn status code 201 , que algo foi criado 
-        return  CreatedAtAction(nameof(RecoverMovieById), new {id = filme.Id}, filme);
+        return CreatedAtAction(nameof(RecoverMovieById), new { id = filme.Id }, filme);
     }
 
 
@@ -89,8 +89,8 @@ public class MovieController : ControllerBase
 
 
     public IActionResult RecoverMovieById(int id)//Mudamos de Filme? => IActionResult(Dava erro o return porque nao é mais um filme)
-        //é o reusltado de uma açao que foi executada
-   /* public Filme? RecoverMovieById(int id)*/// filme pode ser ou nao nulo 
+                                                 //é o reusltado de uma açao que foi executada
+    /* public Filme? RecoverMovieById(int id)*/// filme pode ser ou nao nulo 
 
     {
 
@@ -130,4 +130,24 @@ public class MovieController : ControllerBase
     //-------------------------------//
     //---------------------------------------------//
     //----------------------------------------------------//
+
+
+
+
+
+
+
+
+
+    //Intalamos Framework entity ==>  Entity.FrameworkCore && Entity.FrameworkTools ----> Mais Importantes 
+    // vamos precisar disto para guardar dadod ( ter conecçao com banco de dados )
+    
+
+    //Temos que fazer a conecçao com banco de dados => Classe Criada FilmeContext
+
+
+
+
+
+
 }
