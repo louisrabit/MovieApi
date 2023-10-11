@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MovieApi.Data;
+using MovieApi.DTO;
 using MovieApi.Models;
 
 namespace MovieApi.Controllers;
@@ -26,8 +28,16 @@ public class MovieController : ControllerBase
     // iremos receber um filme como parametro
 
     //public void AddMovie([FromBody] Filme filme)
-    public IActionResult AddMovie([FromBody] Filme filme)
+
+
+
+    //public IActionResult AddMovie([FromBody] Filme filme) -- > nao vamos mais enviar um filme mas um CreateMovieDTO
+    public IActionResult AddMovie([FromBody] CreateMovieDTO filmeDTO)
     {
+
+
+        //DTO -- > Quero fazer um filme apartir de um filme DTO --> final !!!
+       Filme filme = _mapper.Map<Filme>(filmeDTO);
 
         // ESTA SERIA UMA POSSIBILIDADE PARA POR CERTOS LIMITES E VALLIDAÇOES , PARA RESPEITE CERTAS REGRAS
         // Mas existe uma melhor maneira --> data notations !! Por os requesitros em cima dos campos da classe
@@ -188,10 +198,11 @@ public class MovieController : ControllerBase
 
     // Apartir daqui o filmes.Id e o filmes.Add ja nao sao precisos !! 
     private FilmeContext _context;
-    
-    public MovieController(FilmeContext context)
+    private IMapper _mapper;
+    public MovieController(FilmeContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
     //-------------------------------//
     //---------------------------------------------//

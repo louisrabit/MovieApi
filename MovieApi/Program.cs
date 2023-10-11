@@ -11,7 +11,7 @@ builder.Services.AddDbContext<FilmeContext>(opts =>
 //versao que ele esta + Autodetect a versao 
 opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
 
