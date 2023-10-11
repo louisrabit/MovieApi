@@ -50,7 +50,11 @@ public class MovieController : ControllerBase
 
     [HttpGet]
     //Nao preciso de parametros a passar no metodo
-    public List<Filme> ReadListFIlms()
+    public IEnumerable<Filme> ReadListFIlms()
+    // Vamos trocar a List por IEnumerable ( vamos mudar o retorno da lista de filmes , para retorno de Enumeravel de filemes )
+    // Se no futuro houver mudança da lista para outro tipo de classe que use a mesma interface , nao precisamos de trocar o cabeçalho do nosso metodo
+    // Quanto menos depndermos de classes concretas, mas sim de interfaces melhor !!
+    //public List<Filme> ReadListFIlms()
     {
         return filmes;
     }
