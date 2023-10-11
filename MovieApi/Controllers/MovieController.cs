@@ -217,17 +217,14 @@ public class MovieController : ControllerBase
     public IActionResult MovieUpdate(int id, [FromBody] UpdateMovieDTO filmeDTO)
     {
         var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-        if(filme == null)
-        {
-            return NotFound();
-        }
-        else
-        {
-            _mapper.Map(filme, filmeDTO);
+        if(filme == null) return NotFound();
+        
+        
+            _mapper.Map(filmeDTO, filme);
             _context.SaveChanges();
 
             //retornar um status code 
             return NoContent();
-        }
+        
     }
 }
