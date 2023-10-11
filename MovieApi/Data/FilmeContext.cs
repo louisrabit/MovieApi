@@ -25,7 +25,7 @@ public class FilmeContext : DbContext //Abstrair a lógica de acesso ao banco de
     public DbSet<Filme> Filmes { get; set; }
     
     // Como app se autentica no banco ? tem acesso ao banco ? --> appsettings
-
+    // Como passamos os valores para o banco de dados como uma tabela ?? --> Filmeclass[key]
 
 
 }

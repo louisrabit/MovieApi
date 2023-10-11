@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Intrinsics.X86;
 
 namespace MovieApi.Models;
 
@@ -12,8 +13,27 @@ public class Filme
         Id = id;
     }
 
-    public int Id { get;  set; }
-    // Data notations => Required + Error Message +  etc..
+
+    // Como passamos os campos para o banco de dados como uma tabela ??
+
+    //Comando --> Gerenciador de pacotes de Nuget --> Add-Migration + " " + "nome" ( migra os dados da app para o banco de dados )
+    //actualizamos a base de dados == > Update-Database
+    // Faz o Build do nosso Codigo --> faz uma Pasta Migrations !! 
+
+
+    // {[
+    //mySql -- > commands show databases;
+    //show databases; --> mostra a basededados "filme"
+    //use filme; 
+    //show tables; --> mostra a "tabela"
+    //describe filmes; --> mostra os campos da tabela
+    // ]}
+
+
+    [Key] //o ID é una chave dentro do banco de dados --> especificar 
+    [Required]
+    public int Id { get; set; }
+    // Data notations == > Required + Error Message +  etc..
     [Required(ErrorMessage = "The Title field is required.")]
     [MaxLength(50, ErrorMessage = "Max Leght , 50 characters")]
     public string Title { get; set; }
@@ -22,5 +42,5 @@ public class Filme
     public int Time { get; set; }
     [Required(ErrorMessage = "The Gender field is required.")]
     public string Gender { get; set; }
-    
+
 }
