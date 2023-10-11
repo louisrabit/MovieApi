@@ -5,13 +5,14 @@ namespace MovieApi.Models;
 
 public class Filme
 {
-    public Filme(string title, int time, string gender, int id)
+    public Filme(string title = "", int time = 0, string gender = "", int id = 0)
     {
         Title = title;
         Time = time;
         Gender = gender;
         Id = id;
     }
+
 
 
     // Como passamos os campos para o banco de dados como uma tabela ??

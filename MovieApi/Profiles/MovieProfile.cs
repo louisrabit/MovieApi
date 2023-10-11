@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using MovieApi.Models;
-using MovieApi.DTO;
+using MovieApi.Data.DTO;
 
-namespace MovieApi.Profiles;
-
-public class MovieProfile  : Profile
+namespace MovieApi.Profiles
 {
-    // Mapeamento de um filme DTO para um filme
-    public MovieProfile()
+    public class MovieProfile : Profile
     {
-        CreateMap<CreateMovieDTO, Filme>();
+        // Mapeamento de um filme DTO para um filme
+        public MovieProfile()
+        {
+            CreateMap<CreateMovieDTO, Filme>();
+            CreateMap<UpdateMovieDTO, Filme>();
+        }
     }
-
-
 }

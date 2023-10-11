@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Data;
-using MovieApi.DTO;
+using MovieApi.Data.DTO;
 using MovieApi.Models;
 
 namespace MovieApi.Controllers;
@@ -37,7 +37,8 @@ public class MovieController : ControllerBase
 
 
         //DTO -- > Quero fazer um filme apartir de um filme DTO --> final !!!
-       Filme filme = _mapper.Map<Filme>(filmeDTO);
+        // GIve all information without GIve all information !!
+        Filme filme = _mapper.Map<Filme>(filmeDTO);
 
         // ESTA SERIA UMA POSSIBILIDADE PARA POR CERTOS LIMITES E VALLIDAÇOES , PARA RESPEITE CERTAS REGRAS
         // Mas existe uma melhor maneira --> data notations !! Por os requesitros em cima dos campos da classe
@@ -207,4 +208,26 @@ public class MovieController : ControllerBase
     //-------------------------------//
     //---------------------------------------------//
     //----------------------------------------------------//
+
+
+
+
+    // Metodo para actualizaçao de um filme --> temos ja o valor dos campos do banco 
+    [HttpPut("{id}")]
+    public IActionResult MovieUpdate(int id, [FromBody] UpdateMovieDTO filmeDTO)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        if(filme == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            _mapper.Map(filme, filmeDTO);
+            _context.SaveChanges();
+
+            //retornar um status code 
+            return NoContent();
+        }
+    }
 }

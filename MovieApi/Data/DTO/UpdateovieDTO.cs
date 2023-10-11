@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieApi.DTO;
+namespace MovieApi.Data.DTO;
 
-public class CreateMovieDTO
+public class UpdateMovieDTO
 {
     // Nao precisamos que o usuario envie o ID por isso apagamos !!
     // vamos agora nao enviar um filme mas um CreateMovieDTO
