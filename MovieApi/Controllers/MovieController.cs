@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieApi.Data;
 using MovieApi.Models;
 
 namespace MovieApi.Controllers;
@@ -38,12 +39,20 @@ public class MovieController : ControllerBase
 
 
         // vamos ter que adicionar o filme a uma lista 
-        filmes.Add(filme);
+        
+        //ja nao necessario . Uso do context !!
+        //filmes.Add(filme);
+        _context.Filmes.Add(filme);
+        //DEPOIS DE Adicionar --> PRECISAMOS DE Confirmar/salvar 
+        _context.SaveChanges();
+
         //Console.WriteLine(filme.Title);
         //Console.WriteLine(filme.Time);
         // By ID
-        filme.Id = id++;
 
+        //ja nao necessario . Uso do context !!
+        //filme.Id = id++;
+           
 
 
 
@@ -61,7 +70,7 @@ public class MovieController : ControllerBase
 
     // 3: Temos que criar : Lista 
     // temos que criar o objecto --> classe que representa , filme no programa
-    private static List<Filme> filmes = new List<Filme>();
+    //private static List<Filme> filmes = new List<Filme>();
 
     //Metodo de leitura
 
@@ -73,13 +82,15 @@ public class MovieController : ControllerBase
     // Quanto menos depndermos de classes concretas, mas sim de interfaces melhor !!
     //public List<Filme> ReadListFIlms()
     {
-        return filmes.Skip(skip).Take(take);
+        //ja nao necessario . Uso do context !!
+        //return filmes.Skip(skip).Take(take);
+        return _context.Filmes.Skip(skip).Take(take);
     }
 
 
     // recover movie By Id 
 
-    private static int id = 0;
+    //private static int id = 0;
 
 
     // O que muda ? --> Agora com id , no URL nos podemos fazer o post que nos da o filme com id . Podemos fazer o metodo Get para recuperar
@@ -99,10 +110,13 @@ public class MovieController : ControllerBase
 
         // vamos fazrer a alteraçao do return para ==> var filme ( "o filme que  for recuperado apartir da nossaconsulta , for nulo = notfound")
         //return  filmes.FirstOrDefault(filme => filme.Id == id); ---> vamos mudar aqui e da erro no return --> temos que mudar o public Filme
-        var filme = filmes.FirstOrDefault(filme => filme.Id == id);
+
+        //ja nao necessario . Uso do context !!
+        //var filme = filmes.FirstOrDefault(filme => filme.Id == id);
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
         if (filme == null)
         {
-            return NotFound($"Filme nao foi encontrado{filme}");
+            return NotFound($"Filme nao foi encontrado");
         }
         else
         {
@@ -138,16 +152,48 @@ public class MovieController : ControllerBase
 
 
 
+    //----------------------------------------------------//
+    //---------------------------------------------//
+    //-------------------------------//
 
     //Intalamos Framework entity ==>  Entity.FrameworkCore && Entity.FrameworkTools ----> Mais Importantes 
     // vamos precisar disto para guardar dadod ( ter conecçao com banco de dados )
-    
+
 
     //Temos que fazer a conecçao com banco de dados => Classe Criada FilmeContext
 
+    //-------------------------------//
+    //---------------------------------------------//
+    //----------------------------------------------------//
 
 
 
 
 
+
+
+
+
+
+    //----------------------------------------------------//
+    //---------------------------------------------//
+    //-------------------------------//
+
+    // Para fazermos a utilçizaçao e conecçao do nosso banco de dados vamos fazer a remoçao dos "private" das Listas : 
+    //private static int id = 0;
+    //private static List<Filme> filmes = new List<Filme>();
+
+    //Aqui vamos querer : :  -->  que o controlador utilize o Context (resoponsavel de acessar ao banco de dados - entre nossa app e banco de dados )
+    // o nosso controlador de filme , depende da funcionalidade e da injecçao do context . Como fazemos ?? :: 
+
+    // Apartir daqui o filmes.Id e o filmes.Add ja nao sao precisos !! 
+    private FilmeContext _context;
+    
+    public MovieController(FilmeContext context)
+    {
+        _context = context;
+    }
+    //-------------------------------//
+    //---------------------------------------------//
+    //----------------------------------------------------//
 }

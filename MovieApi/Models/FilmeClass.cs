@@ -26,7 +26,8 @@ public class Filme
     //show databases; --> mostra a basededados "filme"
     //use filme; 
     //show tables; --> mostra a "tabela"
-    //describe filmes; --> mostra os campos da tabela
+    //describe filmes; --> mostra os campos da tabela7
+    // select * from filmes --> mostra todos os filmes quje estao na base de dados 
     // ]}
 
 
