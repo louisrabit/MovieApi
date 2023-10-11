@@ -52,13 +52,13 @@ public class MovieController : ControllerBase
 
     [HttpGet]
     //Nao preciso de parametros a passar no metodo
-    public IEnumerable<Filme> ReadListFIlms()
+    public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
     // Vamos trocar a List por IEnumerable ( vamos mudar o retorno da lista de filmes , para retorno de Enumeravel de filemes )
     // Se no futuro houver mudança da lista para outro tipo de classe que use a mesma interface , nao precisamos de trocar o cabeçalho do nosso metodo
     // Quanto menos depndermos de classes concretas, mas sim de interfaces melhor !!
     //public List<Filme> ReadListFIlms()
     {
-        return filmes;
+        return filmes.Skip(skip).Take(take);
     }
 
 
@@ -76,8 +76,20 @@ public class MovieController : ControllerBase
 
     {
         
-        // da minha lista de filmes quero recuperar o meu 1 elemento 
+      // da minha lista de filmes quero recuperar o meu 1 elemento 
         // onde o filme que eu estou a buscar tenha id = ao id conhecido por parametro 
       return  filmes.FirstOrDefault(filme => filme.Id == id);
     }
+
+
+    // NOVA QUESTAO : E SE HOUVE MILHARES DE FILMES ??
+    
+    // Podemos ter um problema de memorylieak , problemas no correr da app 
+    // --> vamos Poder utilizar PAGINAÇAO <-- vsmos usar os metodos skip  & take 
+    // vamos usar estes metodos para haver um carregamento em memoria menor, da quatidade de filmes
+    // Skip => passa pelos elemenots ate ao segujinte indicado ( skip = 10 => quando fazemos o GET começamos no id=11)
+    // take => ele vai dar 50 elementos 
+
+    
+    
 }
