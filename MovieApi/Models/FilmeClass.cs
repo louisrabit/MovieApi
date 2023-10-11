@@ -4,14 +4,15 @@ namespace MovieApi.Models;
 
 public class Filme
 {
-    public Filme(string title, int time, string gender)
+    public Filme(string title, int time, string gender, int id)
     {
         Title = title;
         Time = time;
         Gender = gender;
+        Id = id;
     }
 
-
+    public int Id { get;  set; }
     // Data notations => Required + Error Message +  etc..
     [Required(ErrorMessage = "The Title field is required.")]
     [MaxLength(50, ErrorMessage = "Max Leght , 50 characters")]
@@ -21,5 +22,5 @@ public class Filme
     public int Time { get; set; }
     [Required(ErrorMessage = "The Gender field is required.")]
     public string Gender { get; set; }
-
+    
 }

@@ -39,6 +39,8 @@ public class MovieController : ControllerBase
         filmes.Add(filme);
         Console.WriteLine(filme.Title);
         Console.WriteLine(filme.Time);
+        // By ID
+        filme.Id = id++;
     }
 
 
@@ -59,4 +61,23 @@ public class MovieController : ControllerBase
         return filmes;
     }
 
+
+    // recover movie By Id 
+
+    private static int id = 0;
+
+
+    // O que muda ? --> Agora com id , no URL nos podemos fazer o post que nos da o filme com id . Podemos fazer o metodo Get para recuperar
+    // todos os filmes . =>=> O que muda é neste momento no URL podemos so passar o id do filme , o que nos da so o filme que tem esse ID
+   // fazemos a recuperaçao de forma unica !!
+    [HttpGet("{id}")]//tenho de passar o parametro ID . Quando eu passar o id ele passa este Get , se eu  nao passar ele executa o de cima
+
+    public Filme? RecoverMovieById(int id)// filme pode ser ou nao nulo 
+
+    {
+        
+        // da minha lista de filmes quero recuperar o meu 1 elemento 
+        // onde o filme que eu estou a buscar tenha id = ao id conhecido por parametro 
+      return  filmes.FirstOrDefault(filme => filme.Id == id);
+    }
 }
