@@ -44,7 +44,17 @@ public class MovieController : ControllerBase
         // By ID
         filme.Id = id++;
 
-        //
+
+
+
+        //Devemos retornar o objecto , que foi criado 
+        // Devo informar para o user , qual o caminho que foi cadastrado o objecto 
+        // Quando fazemos um post , no intuito de Post , 
+
+        //Metodo --> buscar o metodo --> paramentros os objectos que vou precisar , id , o id do filme = filme.id ( id do filme que foi criado)
+        // por ultimo , o objecto que foi criado , no sistema
+        // Agora o que faz no postman , se fizermos Post , e visualizarmos nos Headers podemos ver que sempre que criamos um filme o Url, passa sempre um novo id , para cada filme 
+        // o que acontece é da-me umn status code 201 , que algo foi criado 
         return  CreatedAtAction(nameof(RecoverMovieById), new {id = filme.Id}, filme);
     }
 
