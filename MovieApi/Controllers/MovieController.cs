@@ -49,6 +49,7 @@ public class MovieController : ControllerBase
     //Metodo de leitura
 
     [HttpGet]
+    //Nao preciso de parametros a passar no metodo
     public List<Filme> ReadListFIlms()
     {
         return filmes;
