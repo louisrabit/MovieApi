@@ -1,13 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver.Core.Configuration;
 using MovieApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// QUESTAO DE AUtenticaçao !!
+var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 //Nuget : entity.framework.core.Mysql
 builder.Services.AddDbContext<FilmeContext>(opts =>
-opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(connectionString) )
-);
+//versao que ele esta + Autodetect a versao 
+opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+
 
 // Add services to the container.
 
