@@ -23,7 +23,9 @@ public class MovieController : ControllerBase
     // 2 : Metodo para registar um filme 
     // Para adicionar o filme no Sistema mas temos que receber alguma informaçao, via parametro
     // iremos receber um filme como parametro
-    public void AddMovie([FromBody] Filme filme)
+
+    //public void AddMovie([FromBody] Filme filme)
+        public IActionResult AddMovie([FromBody] Filme filme)
     {
 
         // ESTA SERIA UMA POSSIBILIDADE PARA POR CERTOS LIMITES E VALLIDAÇOES , PARA RESPEITE CERTAS REGRAS
@@ -37,10 +39,13 @@ public class MovieController : ControllerBase
 
         // vamos ter que adicionar o filme a uma lista 
         filmes.Add(filme);
-        Console.WriteLine(filme.Title);
-        Console.WriteLine(filme.Time);
+        //Console.WriteLine(filme.Title);
+        //Console.WriteLine(filme.Time);
         // By ID
         filme.Id = id++;
+
+        //
+        return  CreatedAtAction(nameof(RecoverMovieById), new {id = filme.Id}, filme);
     }
 
 
@@ -69,27 +74,50 @@ public class MovieController : ControllerBase
 
     // O que muda ? --> Agora com id , no URL nos podemos fazer o post que nos da o filme com id . Podemos fazer o metodo Get para recuperar
     // todos os filmes . =>=> O que muda é neste momento no URL podemos so passar o id do filme , o que nos da so o filme que tem esse ID
-   // fazemos a recuperaçao de forma unica !!
+    // fazemos a recuperaçao de forma unica !!
     [HttpGet("{id}")]//tenho de passar o parametro ID . Quando eu passar o id ele passa este Get , se eu  nao passar ele executa o de cima
 
-    public Filme? RecoverMovieById(int id)// filme pode ser ou nao nulo 
+
+    public IActionResult RecoverMovieById(int id)//Mudamos de Filme? => IActionResult(Dava erro o return porque nao é mais um filme)
+        //é o reusltado de uma açao que foi executada
+   /* public Filme? RecoverMovieById(int id)*/// filme pode ser ou nao nulo 
 
     {
-        
-      // da minha lista de filmes quero recuperar o meu 1 elemento 
+
+        // da minha lista de filmes quero recuperar o meu 1 elemento 
         // onde o filme que eu estou a buscar tenha id = ao id conhecido por parametro 
-      return  filmes.FirstOrDefault(filme => filme.Id == id);
+
+        // vamos fazrer a alteraçao do return para ==> var filme ( "o filme que  for recuperado apartir da nossaconsulta , for nulo = notfound")
+        //return  filmes.FirstOrDefault(filme => filme.Id == id); ---> vamos mudar aqui e da erro no return --> temos que mudar o public Filme
+        var filme = filmes.FirstOrDefault(filme => filme.Id == id);
+        if (filme == null)
+        {
+            return NotFound($"Filme nao foi encontrado{filme}");
+        }
+        else
+        {
+            return Ok(filme);
+        }
     }
 
 
+    //----------------------------------------------------//
+    //---------------------------------------------//
+    //-------------------------------//
     // NOVA QUESTAO : E SE HOUVE MILHARES DE FILMES ??
-    
+
     // Podemos ter um problema de memorylieak , problemas no correr da app 
     // --> vamos Poder utilizar PAGINAÇAO <-- vsmos usar os metodos skip  & take 
     // vamos usar estes metodos para haver um carregamento em memoria menor, da quatidade de filmes
     // Skip => passa pelos elemenots ate ao segujinte indicado ( skip = 10 => quando fazemos o GET começamos no id=11)
     // take => ele vai dar 50 elementos 
 
-    
-    
+    //public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
+
+    //{
+    //    return filmes.Skip(skip).Take(take);
+    //}
+    //-------------------------------//
+    //---------------------------------------------//
+    //----------------------------------------------------//
 }
