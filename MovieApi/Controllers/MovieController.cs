@@ -19,11 +19,23 @@ namespace MovieApi.Controllers;
 // 1.3 : temos que extender , ControllerBase
 public class MovieController : ControllerBase
 {
+    /// <summary>
+    /// Adiciona um filme ao banco de dados
+    /// </summary>
+    /// <param name="filmeDto">Objeto com os campos necessários para criação de um filme</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
+
     [HttpPost]//4:  vamos fazer uma Postagem do filme 
               //5 : Neste momento fizemos um Post no Postman , com url : 7078/Movie 
               //5: passamos no body um Json , com o titulo , genero e time e deu codigo 200, ok
               // --> na consola apareve o codigo 200 e ALURA Movie
               // Neste momento passamos um filme  na nossa lista 
+
+    //Informaçao que podemos passar , para o swagger com o que faz o metodo , que parametros sao actualizados etc
+    //temos que ir ao program.cs 
+    // temos de ir ao nosso MovieApi(projecto) carregar duas vezes em cima e acrescentar :  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    [ProducesResponseType(StatusCodes.Status201Created)]
 
     // 2 : Metodo para registar um filme 
     // Para adicionar o filme no Sistema mas temos que receber alguma informaçao, via parametro
