@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieApi.Data;
 using MovieApi.Data.DTO;
 using MovieApi.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MovieApi.Controllers;
 
@@ -260,13 +261,25 @@ public class MovieController : ControllerBase
         return NoContent();
 
         //campos que temos que por para conseguirmos mudar o campo
-//        [{
-//            "op": "replace",
-//            "path": "/Title",
-//            "value": "senhor dos aneis"
-//       }]
-
-
-
+        //        [{
+        //            "op": "replace",
+        //            "path": "/Title",
+        //            "value": "senhor dos aneis"
+        //       }]
     }
+
+
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteById(int id)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        if (filme == null) return NotFound();
+        _context.Remove(filme);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+
+
 }
