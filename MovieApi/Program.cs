@@ -12,7 +12,7 @@ builder.Services.AddDbContext<FilmeContext>(opts =>
 opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddControllers().AddNewtonsoftJson();
 // Add services to the container.
 
 builder.Services.AddControllers();

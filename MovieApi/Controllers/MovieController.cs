@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Data;
 using MovieApi.Data.DTO;
@@ -50,7 +51,7 @@ public class MovieController : ControllerBase
 
 
         // vamos ter que adicionar o filme a uma lista 
-        
+
         //ja nao necessario . Uso do context !!
         //filmes.Add(filme);
         _context.Filmes.Add(filme);
@@ -63,7 +64,7 @@ public class MovieController : ControllerBase
 
         //ja nao necessario . Uso do context !!
         //filme.Id = id++;
-           
+
 
 
 
@@ -213,18 +214,59 @@ public class MovieController : ControllerBase
 
 
     // Metodo para actualizaçao de um filme --> temos ja o valor dos campos do banco 
-    [HttpPut("{id}")]
+    [HttpPut("{id}")] // para actualizar eu tenho que passar o objecto inteiro --> util isar o patch para actualizar o campo 
     public IActionResult MovieUpdate(int id, [FromBody] UpdateMovieDTO filmeDTO)
     {
         var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-        if(filme == null) return NotFound();
-        
-        
-            _mapper.Map(filmeDTO, filme);
-            _context.SaveChanges();
+        if (filme == null) return NotFound();
 
-            //retornar um status code 
-            return NoContent();
-        
+
+        _mapper.Map(filmeDTO, filme);
+        _context.SaveChanges();
+
+        //retornar um status code 
+        return NoContent();
+
+    }
+
+
+
+    // Tive que instalar o NewtonSoft --> depois build no program.cs
+    [HttpPatch("{id}")]
+    //JsonPatchDocument vai ser referente ao UpdateFilmeDto -->  vai conter 1 ou mais informaçoes respectivas a um filme ( chamamos de patch ) 
+    // vamos converter o filme do banco para um UpdateFilmeDto
+
+
+    //json parcial , do que queremos mudar --> ele recebe 1 ou mais informaçoes resctivas ao MovieDTO
+    // agora nao recebemos o movieDTO mas recebemos um JSonpatchDocument
+    public IActionResult MovieFiledOnlyUpdate(int id, JsonPatchDocument<UpdateMovieDTO> patch)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);   // receber e ver o filme que nos temos
+        if (filme == null) return NotFound(); // caso nao encontre --> not found()
+
+        //o que precisamos é de converter um filme do banco para updatemovieDTO , para aplicar as regras de validaçao . Se o DTO estiver valido convertemos novamente para um filme 
+        var filmeToUpdate = _mapper.Map<UpdateMovieDTO>(filme);
+        // Se a mudança que estamos a tentar aplicar , patch , for aplicada ao nosso filmeToUpdate e contiver um modelo de estao (ModelState) , 
+        // converte de volta para um filme , se nao retorna , da erro de validaçao
+        patch.ApplyTo(filmeToUpdate, ModelState);
+        if (!TryValidateModel(filmeToUpdate))// Se nao conseguir validar o modelo --> retorna validation Problem apartir do modelstate 
+        {
+            return ValidationProblem(ModelState);
+        }
+        // ser for tudo ok , retorna o filme para actualizar para um filme 
+        // vamos precisar de CreateMap<> !!!
+        _mapper.Map(filmeToUpdate, filme);
+        _context.SaveChanges();
+        return NoContent();
+
+        //campos que temos que por para conseguirmos mudar o campo
+//        [{
+//            "op": "replace",
+//            "path": "/Title",
+//            "value": "senhor dos aneis"
+//       }]
+
+
+
     }
 }
