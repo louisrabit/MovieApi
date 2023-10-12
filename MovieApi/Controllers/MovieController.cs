@@ -89,7 +89,9 @@ public class MovieController : ControllerBase
 
     [HttpGet]
     //Nao preciso de parametros a passar no metodo
-    public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
+    //public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
+   
+    public IEnumerable<ReadMovieDTO> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
     // Vamos trocar a List por IEnumerable ( vamos mudar o retorno da lista de filmes , para retorno de Enumeravel de filemes )
     // Se no futuro houver mudança da lista para outro tipo de classe que use a mesma interface , nao precisamos de trocar o cabeçalho do nosso metodo
     // Quanto menos depndermos de classes concretas, mas sim de interfaces melhor !!
@@ -97,7 +99,8 @@ public class MovieController : ControllerBase
     {
         //ja nao necessario . Uso do context !!
         //return filmes.Skip(skip).Take(take);
-        return _context.Filmes.Skip(skip).Take(take);
+        return  _mapper.Map<List<ReadMovieDTO>>(_context.Filmes.Skip(skip).Take(take));
+        //vamos querer mapear o filme para uma lista readmovieDTO , o nosso context.movie
     }
 
 
@@ -133,7 +136,8 @@ public class MovieController : ControllerBase
         }
         else
         {
-            return Ok(filme);
+            var filmeDto = _mapper.Map<ReadMovieDTO>(filme);
+            return Ok(filmeDto);
         }
     }
 
@@ -281,5 +285,9 @@ public class MovieController : ControllerBase
     }
 
 
+
+
+    // Nos temos o recupera filmes por ID e o recupera filmes , metodo !!
+    // vamos criar uma nova classe , ReadFilmesDto
 
 }
