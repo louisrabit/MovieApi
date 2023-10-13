@@ -37,10 +37,16 @@ public class Movie
 
 
 
+    // como um filme pode ter muitas sessoes fazemos uma Coleçao de :
+    public virtual ICollection<Session> Session { get; set; }
+
     // Os datanotations estao a ser passados no banco de dados => nao sao necessarios e falta de segurança , visto que tambem é parte do nosso controlador
     // Se fzermos "describe filmes" , por exemplo , vemos o maxlenght 50 !
     // o que vamos fazer ? --> vamos criar classes que estanciam objectos , que sao responsaveis por mandar dados por diferentes camadas !! --> DTO(data tranferobject)
     // Exemplo : camada de apresentaçao : HttpPost -> usuario interage conosco 
 
     // Soluçao do  Dto => criar uma classe , que contem as validacoes que devem ser feitas dependendo com o que o usuario envia , e as inf que o usuario envia 
+
+
+
 }

@@ -21,7 +21,7 @@ public class Cinema
 
     public virtual Address Address { get; set; }  //vai ter uma propriedade virtual -- > Explicita que o Cinema Tera 1 Address
 
+    public virtual ICollection<Session> Session { get; set; }
 
-   
 
 }
