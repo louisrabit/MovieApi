@@ -9,10 +9,10 @@ namespace MovieApi.Profiles
         // Mapeamento de um filme DTO para um filme
         public MovieProfile()
         {
-            CreateMap<CreateMovieDTO, Filme>();
-            CreateMap<UpdateMovieDTO, Filme>();
-            CreateMap<Filme, UpdateMovieDTO>();
-            CreateMap<Filme, ReadMovieDTO>();
+            CreateMap<CreateMovieDTO, Movie>();
+            CreateMap<UpdateMovieDTO, Movie>();
+            CreateMap<Movie, UpdateMovieDTO>();
+            CreateMap<Movie, ReadMovieDTO>();
         }
     }
 }

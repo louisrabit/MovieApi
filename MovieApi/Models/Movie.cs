@@ -3,18 +3,8 @@ using System.Runtime.Intrinsics.X86;
 
 namespace MovieApi.Models;
 
-public class Filme
+public class Movie
 {
-    public Filme(string title = "", int time = 0, string gender = "", int id = 0)
-    {
-        Title = title;
-        Time = time;
-        Gender = gender;
-        Id = id;
-    }
-
-
-
     // Como passamos os campos para o banco de dados como uma tabela ??
 
     //Comando --> Gerenciador de pacotes de Nuget --> Add-Migration + " " + "nome" ( migra os dados da app para o banco de dados )

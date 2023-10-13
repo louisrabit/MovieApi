@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace MovieApi.Controllers;
 
 
-// Para que seja um controlador e esteja abil a receber requesiçoes 
+// Para que seja um controlador e esteja habil a receber requesiçoes 
 // 1 : Anotaçoes :
 [ApiController]
 //1.1 Anotaçoes de rota 
@@ -41,18 +41,18 @@ public class MovieController : ControllerBase
     // Para adicionar o filme no Sistema mas temos que receber alguma informaçao, via parametro
     // iremos receber um filme como parametro
 
-    //public void AddMovie([FromBody] Filme filme)
+    //public void AddMovie([FromBody] Movie filme)
 
 
 
-    //public IActionResult AddMovie([FromBody] Filme filme) -- > nao vamos mais enviar um filme mas um CreateMovieDTO
+    //public IActionResult AddMovie([FromBody] Movie filme) -- > nao vamos mais enviar um filme mas um CreateMovieDTO
     public IActionResult AddMovie([FromBody] CreateMovieDTO filmeDTO)
     {
 
 
         //DTO -- > Quero fazer um filme apartir de um filme DTO --> final !!!
         // GIve all information without GIve all information !!
-        Filme filme = _mapper.Map<Filme>(filmeDTO);
+        Movie filme = _mapper.Map<Movie>(filmeDTO);
 
         // ESTA SERIA UMA POSSIBILIDADE PARA POR CERTOS LIMITES E VALLIDAÇOES , PARA RESPEITE CERTAS REGRAS
         // Mas existe uma melhor maneira --> data notations !! Por os requesitros em cima dos campos da classe
@@ -95,19 +95,19 @@ public class MovieController : ControllerBase
 
     // 3: Temos que criar : Lista 
     // temos que criar o objecto --> classe que representa , filme no programa
-    //private static List<Filme> filmes = new List<Filme>();
+    //private static List<Movie> filmes = new List<Movie>();
 
     //Metodo de leitura
 
     [HttpGet]
     //Nao preciso de parametros a passar no metodo
-    //public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
+    //public IEnumerable<Movie> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
    
     public IEnumerable<ReadMovieDTO> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
     // Vamos trocar a List por IEnumerable ( vamos mudar o retorno da lista de filmes , para retorno de Enumeravel de filemes )
     // Se no futuro houver mudança da lista para outro tipo de classe que use a mesma interface , nao precisamos de trocar o cabeçalho do nosso metodo
     // Quanto menos depndermos de classes concretas, mas sim de interfaces melhor !!
-    //public List<Filme> ReadListFIlms()
+    //public List<Movie> ReadListFIlms()
     {
         //ja nao necessario . Uso do context !!
         //return filmes.Skip(skip).Take(take);
@@ -127,9 +127,9 @@ public class MovieController : ControllerBase
     [HttpGet("{id}")]//tenho de passar o parametro ID . Quando eu passar o id ele passa este Get , se eu  nao passar ele executa o de cima
 
 
-    public IActionResult RecoverMovieById(int id)//Mudamos de Filme? => IActionResult(Dava erro o return porque nao é mais um filme)
+    public IActionResult RecoverMovieById(int id)//Mudamos de Movie? => IActionResult(Dava erro o return porque nao é mais um filme)
                                                  //é o reusltado de uma açao que foi executada
-    /* public Filme? RecoverMovieById(int id)*/// filme pode ser ou nao nulo 
+    /* public Movie? RecoverMovieById(int id)*/// filme pode ser ou nao nulo 
 
     {
 
@@ -137,14 +137,14 @@ public class MovieController : ControllerBase
         // onde o filme que eu estou a buscar tenha id = ao id conhecido por parametro 
 
         // vamos fazrer a alteraçao do return para ==> var filme ( "o filme que  for recuperado apartir da nossaconsulta , for nulo = notfound")
-        //return  filmes.FirstOrDefault(filme => filme.Id == id); ---> vamos mudar aqui e da erro no return --> temos que mudar o public Filme
+        //return  filmes.FirstOrDefault(filme => filme.Id == id); ---> vamos mudar aqui e da erro no return --> temos que mudar o public Movie
 
         //ja nao necessario . Uso do context !!
         //var filme = filmes.FirstOrDefault(filme => filme.Id == id);
         var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
         if (filme == null)
         {
-            return NotFound($"Filme nao foi encontrado");
+            return NotFound($"Movie nao foi encontrado");
         }
         else
         {
@@ -165,7 +165,7 @@ public class MovieController : ControllerBase
     // Skip => passa pelos elemenots ate ao segujinte indicado ( skip = 10 => quando fazemos o GET começamos no id=11)
     // take => ele vai dar 50 elementos 
 
-    //public IEnumerable<Filme> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
+    //public IEnumerable<Movie> ReadListFIlms([FromQuery] int skip = 0, [FromQuery] int take = 20)
 
     //{
     //    return filmes.Skip(skip).Take(take);
@@ -210,7 +210,7 @@ public class MovieController : ControllerBase
 
     // Para fazermos a utilçizaçao e conecçao do nosso banco de dados vamos fazer a remoçao dos "private" das Listas : 
     //private static int id = 0;
-    //private static List<Filme> filmes = new List<Filme>();
+    //private static List<Movie> filmes = new List<Movie>();
 
     //Aqui vamos querer : :  -->  que o controlador utilize o Context (resoponsavel de acessar ao banco de dados - entre nossa app e banco de dados )
     // o nosso controlador de filme , depende da funcionalidade e da injecçao do context . Como fazemos ?? :: 
