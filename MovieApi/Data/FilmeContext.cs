@@ -28,4 +28,6 @@ public class FilmeContext : DbContext //Abstrair a lógica de acesso ao banco de
     // Como passamos os valores para o banco de dados como uma tabela ?? --> Filmeclass[key]
     public DbSet<Cinema> Cinemas { get; set; }
     public DbSet<Address> Address { get; set; }
+
+    public DbSet<Session> Sessions { get; set; }
 }
